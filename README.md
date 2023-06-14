@@ -8,9 +8,9 @@
 
 ![Image of the full website application](./Images/custom-pgen-full-page.png)
 
-## Installation
+## Link to Application
 
-N/A
+https://mhammy.github.io/custom-pgen/
 
 ## Usage
 
