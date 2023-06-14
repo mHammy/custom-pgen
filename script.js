@@ -2,6 +2,15 @@
 var generateBtn = document.querySelector("#generate");
 
 function generatePassword() {
+  lowerCaseCharCodes = arrayFromLowToHigh(97, 122);
+  upperCaseCharCodes = arrayFromLowToHigh(65, 90);
+  numberCharCodes = arrayFromLowToHigh(48, 57);
+  symbolCharCodes = arrayFromLowToHigh(33, 47).concat(
+    arrayFromLowToHigh(58, 64).concat(
+      arrayFromLowToHigh(91, 96).concat(arrayFromLowToHigh(123, 126))
+    )
+  );
+  var passwordResult = []
 // 1. prompt the user for the password criteria
 pLength();
 //  a. password length between 8-128
@@ -65,7 +74,7 @@ function sChar() {
   return includeSpecial;
 }
 
-// 2. validate the input (between 8-128, is number, 1 character type selected)
+// 2. validate the input (1 character type selected minimum)
 vCheck();
 
 function vCheck() {
@@ -78,17 +87,41 @@ function vCheck() {
   return vGood;
 }
 
-// 3. Generate password based on criteria
-
-console.log(passwordLength);
-console.log(includeLowercase);
-console.log(includeUppercase);
-console.log(includeNumbers);
-console.log(includeSpecial);
-console.log(vGood);
-
-  return "test";
+function arrayFromLowToHigh(low, high) {
+  var array = [];
+  for (var i = low; i <= high; i++) {
+    array.push(i);
   }
+  return array;
+}
+
+// 3. Generate password based on criteria
+pCreate()
+
+function pCreate() {
+  var charCodes = [];
+  if(includeLowercase) {
+    charCodes = charCodes.concat(lowerCaseCharCodes);
+  }
+  if(includeUppercase) {
+    charCodes = charCodes.concat(upperCaseCharCodes);
+  }
+  if(includeNumbers) {
+    charCodes = charCodes.concat(numberCharCodes);
+  }
+  if(includeSpecial) {
+    charCodes = charCodes.concat(symbolCharCodes);
+  }
+
+  for (var i = 0; i < passwordLength; i++) {
+    var passwordCode = charCodes[Math.floor(Math.random() * charCodes.length)];
+    passwordResult.push(String.fromCharCode(passwordCode));
+  }
+  return passwordResult;
+}
+
+  return passwordResult.join('');
+}
 // 4. Display the generated password on the page (return the var holding the password)
 // Write password to the #password input
 function writePassword() {
